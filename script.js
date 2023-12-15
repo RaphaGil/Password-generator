@@ -100,48 +100,99 @@ var upperCasedCharacters = [
 //   * Code should validate for each input and at least one character type should be selected
 //   * Once prompts are answered then the password should be generated and displayed in an alert or written to the page
 
+// Sample pseudocode for Password Generator:
+// const charOptions = [];
+// const generatedPassword = '';
+// You can store the generatedPassword as a string and concat each character OR
+// as an array and push each character, then join once you have enough characters
 
 // Function to prompt user for password options
-function getPasswordOptions() {
-  let length = (prompt('Choose a password at least 8 characters but no more than 128')); // The function displays a prompt to the user asking them to choose a password length. The entered value is stored in the length variable.
+// function getPasswordOptions() {
+  // Prompt for password length
+  // At least 8 characters, no more than 128 characters
+  // Conditional to check that the number that was entered is in range
+  // Prompts store data as strings, so need to parse into a number
+  // If the user's input is out of range, either return out of the function or call the function again
 
-  // Check if the length entered is less than 8 or greater than 128
-  if (length < 8 || length > 128 || isNaN(length)) {
-    alert('The length is not within the range or invalid.'); // Give an alert if the length is not between the range specificated
-   
-    return null; //If the length is not within the specified range or is not a number, it displays an alert notifying the user about the invalid length and returns null.
-  }
+  // Confirm which character sets to use
+  // If the user answers false for all, either return out of the function or call the function again
+  
+  // Once they select a character set:
+  // Generate a random character for each selected character set
+  // Either push selected character sets to a mega-array of all selected characters
+  // OR you can keep the arrays separate and generate a random number to select the array and another to select the index
+  
+  // Once character sets are selected, move on to generating random characters
 
-  return length; //return the length 
-}
 
 // Function for getting a random element from an array
-function getRandom(arr) {
-  const randomIndex = Math.floor(Math.random() * arr.length); //Chose a random character on the array and store it in the variable 'randomIndex'
-  return arr[randomIndex];
-}
+// function getRandom(arr) {
+  // Need a variable to hold the password as it's being generated
+  // Need a variable to hold the index that's being generated
 
-// Function to generate password with user input
-function generatePassword(length) {
-  let password = ''; // Initialize an empty string to store the generated password
+  // For loop that loops the number of times that matches the length the user chose
+  // Generate a random number
+  // That number is the index for a character in the mega-array
+  // So then, mega-array[generated-index] is the actual character
+  // Add that character to the password
 
-  if (length !== null) { // Check if the provided length is not null
-    const characters = [].concat(specialCharacters, numericCharacters, lowerCasedCharacters, upperCasedCharacters); // concat() method is used to merge two or more arrays or values together, creating a new array without modifying the existing arrays. It doesn't change the original arrays; instead, it returns a new array containing the combined elements.
+  // Once we finish the for loop, return the generated password
+// }
 
-    // Concatenate arrays of special characters, numeric characters, lowercase characters, and uppercase characters into one 'characters' array
-    for (let i = 0; i < length; i++) {
-      const randomChar = getRandom(characters);
-      // Get a random character from the combined 'characters' array and store it in the variable 'ramdomChar'
-      password += randomChar;
-      // Append the random character to the 'password' string
-    }
-    return password; // Return the generated password
-  } else {
-    return 'Invalid password length. Please try again.';
-    // Return an error message if the provided length is null
+/// Function to prompt user for password options
+function getPasswordOptions() {
+  let length = parseInt(prompt('Choose a password length (between 8 and 128 characters)'));
+  
+  if (isNaN(length) || length < 8 || length > 128) {
+    alert('Invalid length. Please choose a length between 8 and 128 characters.');
+    return null;
   }
+    //These properties correspond to the user's selections regarding including specific character types in the generated password. Each of these properties holds a boolean value (true or false) based on the user's choice to include or exclude that particular character type.
+  let userspecialCharacters = confirm('Include special characters in the password?');
+  let usernumericCharacters = confirm('Include numeric characters in the password?');
+  let userlowerCasedCharacters = confirm('Include lowercase characters in the password?');
+  let userupperCasedCharacters = confirm('Include uppercase characters in the password?');
+
+  if (!(userspecialCharacters || usernumericCharacters || userlowerCasedCharacters || userupperCasedCharacters)) {
+    alert('Please select at least one character type.');
+    return null;
+  }
+
+  return {
+    length: length,
+    //Here, a property named userspecialCharacters is created in the returned object, which receives the value of the variable userspecialCharacters. This property indicates whether the user opted to include special characters in the password.
+    userspecialCharacters: userspecialCharacters, //returning all the let as otherwise it will return the first return and stop on it
+    usernumericCharacters: usernumericCharacters,
+    userlowerCasedCharacters: userlowerCasedCharacters,
+    userupperCasedCharacters: userupperCasedCharacters,
+  };
 }
 
+function generatePassword(options) {
+  let characters = ''; // Initializes an empty string variable named characters to store all the characters that can be used to generate the password.
+  
+  //If the user chooses to include special characters (true), it concatenates the specialCharacters array elements into the characters string using join(''). This means that all special characters are concatenated together without any separator.
+  if (options.userspecialCharacters) { 
+    characters += specialCharacters.join('');
+  }
+  if (options.usernumericCharacters) {
+    characters += numericCharacters.join('');
+  }
+  if (options.userlowerCasedCharacters) {
+    characters += lowerCasedCharacters.join('');
+  }
+  if (options.userupperCasedCharacters) {
+    characters += upperCasedCharacters.join('');
+  }
+
+  let password = '';
+  for (let i = 0; i < options.length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    password += characters.charAt(randomIndex);
+  }
+
+  return password;
+}
 
 // Function to write password to the #password input
 function writePassword() {

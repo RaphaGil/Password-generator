@@ -204,3 +204,6 @@ var generateBtn = document.querySelector("#generate"); //selects an HTML element
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword); //When the btn is clicked triggers the 'writePassword()' function and shows the password
+// Show the custom alert
+
+

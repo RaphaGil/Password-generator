@@ -135,6 +135,7 @@ function getPasswordOptions() {
     userupperCasedCharacters
   ) {
     const message =
+      'Confirm: ' + "\n" +
       "You chose length: " +
       length +
       "\n" +
@@ -155,7 +156,7 @@ function getPasswordOptions() {
   }
 
   return {
-    length: length,
+    passwordlength: length,
     //Here, a property named userspecialCharacters is created in the returned object, which receives the value of the variable userspecialCharacters. This property indicates whether the user opted to include special characters in the password.
     userspecialCharacters: userspecialCharacters, //returning all the let as otherwise it will return the first return and stop on it
     usernumericCharacters: usernumericCharacters,
@@ -163,40 +164,45 @@ function getPasswordOptions() {
     userupperCasedCharacters: userupperCasedCharacters,
   };
 }
+
 // Function for getting a random element from an array
-function generatePassword(options) {
+function generatePassword(useroption) {
   let characters = ""; // Initializes an empty string variable named characters to store all the characters that can be used to generate the password.
 
   //If the user chooses to include special characters (true), it concatenates the specialCharacters array elements into the characters string using join(''). This means that all special characters are concatenated together without any separator.
-  if (options.userspecialCharacters) {
+  if (useroption.userspecialCharacters ) {
     characters += specialCharacters.join("");
+    console.log(characters)
   }
-  if (options.usernumericCharacters) {
+  if (useroption.usernumericCharacters) {
     characters += numericCharacters.join("");
   }
-  if (options.userlowerCasedCharacters) {
+  if (useroption.userlowerCasedCharacters) {
     characters += lowerCasedCharacters.join("");
   }
-  if (options.userupperCasedCharacters) {
+  if (useroption.userupperCasedCharacters) {
     characters += upperCasedCharacters.join("");
   }
+
   let password = ""; // create a variable to store the random password on it
-  for (let i = 0; i < options.length; i++) {
+  for (let i = 0; i < useroption.passwordlength; i++) { //do the looping untill reach the size user chose 'passwordlenght'
     const randomIndex = Math.floor(Math.random() * characters.length);
     password += characters.charAt(randomIndex); //Get a random characther
   }
+
   return password;
 }
 
+
 // Function to write password to the #password input
 function writePassword() {
-  var passwordLength = getPasswordOptions(); // create a variable to store the function on it and then I get my length to use in my password variable below
-  if (passwordLength !== null) {
-    //It means that the user has selected at least one type of character and the chosen length for the password falls within the specified range
-    var password = generatePassword(passwordLength); //f the user provided valid options (i.e., passwordLength is not null), it calls the generatePassword() function to create a password using the provided options.
+  var passwordOptions = getPasswordOptions(); // create a variable to store the function on it and then I get my Options to use in my password variable below
+  if (passwordOptions !== null) {//It means that the user has selected at least one type of character and the chosen Options for the password falls within the specified range
+    var password = generatePassword(passwordOptions); //f the user provided valid options (i.e., passwordLength is not null), it calls the generatePassword() function to create a password using the provided options.
     var passwordText = document.querySelector("#password"); //It then selects the HTML element with the ID #password (<input> element, presumably) using document.querySelector('#password').
     passwordText.value = password; //The generated password is assigned to the value property of this HTML element, making it visible in the input field on the webpage.
   }
+  return password
 }
 
 // Get reference to the #generate element
@@ -207,3 +213,18 @@ generateBtn.addEventListener("click", writePassword); //When the btn is clicked 
 // Show the custom alert
 
 
+function copyPassword() {
+var passwordEl = document.querySelector("#password")
+var password = passwordEl.value
+
+  if (password) {
+    // Verifica se a senha foi gerada
+    alert('Password copied: ' + password); // Exibe um alerta com a senha gerada
+    // Aqui você pode adicionar a lógica para copiar a senha para a área de transferência
+  } else {
+    alert('You need to generate a password first'); // Exibe um alerta se a senha não foi gerada
+  }
+}
+// Adiciona um evento de clique ao botão de cópia de senha
+var copyBtn = document.querySelector('#copy');
+copyBtn.addEventListener("click", copyPassword);

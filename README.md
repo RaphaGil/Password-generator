@@ -23,12 +23,12 @@ To set up and view this project locally, follow these simple steps:
 
 ## Screenshots
 ### Dashboard Overview
-![Raphaela Password Generator](https://github.com/RaphaGil/Password-generator/assets/128820385/fb6ac2d8-3d31-4717-bc42-f68bbc89491c)
+![Raphaela Password Generator](https://github.com/RaphaGil/Password-generator/assets/128820385/fb255f86-0a67-435f-9748-4d2d6e58d1df)
 *Caption: Overview of the project's main webpage.*
 ### Dashboard Overview with the generated password
-![Password Password Generator result](https://github.com/RaphaGil/Password-generator/assets/128820385/18835de9-f018-44b5-95d5-1a51e7c9f5b5)
+![Password Password Generator result](https://github.com/RaphaGil/Password-generator/assets/128820385/42605c87-466a-475e-bc81-3250874fa42d)
 *Caption: A detailed view of the main webpage showcasing the generated password results.*
-![Password Password Generator prompt](https://github.com/RaphaGil/Password-generator/assets/128820385/5a54ac67-a40e-4b9a-9af2-afc8a84a560d)
+![Password Password Generator prompt](https://github.com/RaphaGil/Password-generator/assets/128820385/940a1c59-d95e-458e-9d1b-f48be6d99bf7)
 *Caption: A detailed view of the main webpage showcasing the prompt.*
 
 ## Usage

@@ -90,9 +90,7 @@ var upperCasedCharacters = [
 
 /// Function to prompt user for password options
 function getPasswordOptions() {
-  let length = parseInt(
-    prompt("Choose a password length (between 8 and 128 characters)")
-  ); //Prompt the user to choose the length of the password
+  let length = prompt("Choose a password length (between 8 and 128 characters)"); //Prompt the user to choose the length of the password
 
   if (isNaN(length) || length < 8 || length > 128) {
     alert(
@@ -128,14 +126,16 @@ function getPasswordOptions() {
   }
 
   //user can confirm all his option chosen
-  if ( // If the chosen length falls within the specified range and at least one character type is selected, it displays this confirmation.
+  if (
+    // If the chosen length falls within the specified range and at least one character type is selected, it displays this confirmation.
     userspecialCharacters ||
     usernumericCharacters ||
     userlowerCasedCharacters ||
     userupperCasedCharacters
   ) {
     const message =
-      'Confirm: ' + "\n" +
+      "Confirm: " +
+      "\n" +
       "You chose length: " +
       length +
       "\n" +
@@ -151,13 +151,12 @@ function getPasswordOptions() {
       "You inclued upperCase characters: " +
       userupperCasedCharacters +
       "\n";
-
     confirm(message);
   }
 
   return {
-    passwordlength: length,
     //Here, a property named userspecialCharacters is created in the returned object, which receives the value of the variable userspecialCharacters. This property indicates whether the user opted to include special characters in the password.
+    passwordlength: length,
     userspecialCharacters: userspecialCharacters, //returning all the let as otherwise it will return the first return and stop on it
     usernumericCharacters: usernumericCharacters,
     userlowerCasedCharacters: userlowerCasedCharacters,
@@ -170,9 +169,9 @@ function generatePassword(useroption) {
   let characters = ""; // Initializes an empty string variable named characters to store all the characters that can be used to generate the password.
 
   //If the user chooses to include special characters (true), it concatenates the specialCharacters array elements into the characters string using join(''). This means that all special characters are concatenated together without any separator.
-  if (useroption.userspecialCharacters ) {
+  if (useroption.userspecialCharacters) {
     characters += specialCharacters.join("");
-    console.log(characters)
+    console.log(characters);
   }
   if (useroption.usernumericCharacters) {
     characters += numericCharacters.join("");
@@ -185,46 +184,44 @@ function generatePassword(useroption) {
   }
 
   let password = ""; // create a variable to store the random password on it
-  for (let i = 0; i < useroption.passwordlength; i++) { //do the looping untill reach the size user chose 'passwordlenght'
+  for (let i = 0; i < useroption.passwordlength; i++) {
+    //Perform the looping process until it reaches the size chosen by the user for the 'password length'
     const randomIndex = Math.floor(Math.random() * characters.length);
-    password += characters.charAt(randomIndex); //Get a random characther
+    password += characters.charAt(randomIndex); //Get a random character from the array - charArt
   }
-
   return password;
 }
-
 
 // Function to write password to the #password input
 function writePassword() {
   var passwordOptions = getPasswordOptions(); // create a variable to store the function on it and then I get my Options to use in my password variable below
-  if (passwordOptions !== null) {//It means that the user has selected at least one type of character and the chosen Options for the password falls within the specified range
+  if (passwordOptions !== null) {
+    //It means that the user has selected at least one type of character and the chosen Options for the password falls within the specified range
     var password = generatePassword(passwordOptions); //f the user provided valid options (i.e., passwordLength is not null), it calls the generatePassword() function to create a password using the provided options.
     var passwordText = document.querySelector("#password"); //It then selects the HTML element with the ID #password (<input> element, presumably) using document.querySelector('#password').
     passwordText.value = password; //The generated password is assigned to the value property of this HTML element, making it visible in the input field on the webpage.
   }
-  return password
+  return password;
 }
 
 // Get reference to the #generate element
 var generateBtn = document.querySelector("#generate"); //selects an HTML element with the ID #generate.
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword); //When the btn is clicked triggers the 'writePassword()' function and shows the password
 // Show the custom alert
 
-
 function copyPassword() {
-var passwordEl = document.querySelector("#password")
-var password = passwordEl.value
+  var passwordEl = document.querySelector("#password");
+  var password = passwordEl.value;
 
   if (password) {
     // Verifica se a senha foi gerada
-    alert('Password copied: ' + password); // Exibe um alerta com a senha gerada
+    alert("Password copied: " + password); // Exibe um alerta com a senha gerada
     // Aqui você pode adicionar a lógica para copiar a senha para a área de transferência
   } else {
-    alert('You need to generate a password first'); // Exibe um alerta se a senha não foi gerada
+    alert("You need to generate a password first"); // Exibe um alerta se a senha não foi gerada
   }
 }
 // Adiciona um evento de clique ao botão de cópia de senha
-var copyBtn = document.querySelector('#copy');
+var copyBtn = document.querySelector("#copy");
 copyBtn.addEventListener("click", copyPassword);

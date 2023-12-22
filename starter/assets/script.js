@@ -1,3 +1,5 @@
+// For detailed pseudocode, refer to pseudocode.txt
+
 // Array of special characters to be included in password
 var specialCharacters = [
   "@",
